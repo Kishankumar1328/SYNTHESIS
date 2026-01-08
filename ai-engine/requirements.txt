@@ -1,0 +1,5 @@
+sdv==1.32.0
+pandas==2.3.3
+numpy==2.4.0
+scikit-learn==1.8.0
+sdmetrics==0.24.0
