@@ -148,7 +148,7 @@ export default function ProjectDetails() {
 
     if (!project) return (
         <div className="flex items-center justify-center h-screen">
-            <i className='bx bx-loader-alt animate-spin text-6xl text-blue-500'></i>
+            <i className='bx bx-loader-alt animate-spin text-6xl text-teal-500'></i>
         </div>
     );
 
@@ -171,11 +171,11 @@ export default function ProjectDetails() {
                     </button>
                     <div>
                         <div className="flex items-center space-x-3 mb-1">
-                            <h1 className="text-4xl font-black tracking-tight italic">{project.name}</h1>
-                            <span className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black text-blue-400 uppercase tracking-widest">Active Workspace</span>
+                            <h1 className="text-4xl font-black tracking-tight italic bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent">{project.name}</h1>
+                            <span className="px-3 py-1 bg-teal-500/10 border border-teal-500/20 rounded-full text-[10px] font-black text-teal-400 uppercase tracking-widest">Active Workspace</span>
                         </div>
                         <p className="text-muted-foreground font-medium flex items-center">
-                            <i className='bx bx-network-chart mr-2 text-blue-500/50'></i>
+                            <i className='bx bx-network-chart mr-2 text-teal-500/50'></i>
                             Distributed Synthetic Intelligence Environment
                         </p>
                     </div>
@@ -188,7 +188,7 @@ export default function ProjectDetails() {
                     <div className="glass-panel p-6 rounded-[2.5rem] border border-white/5 space-y-6 relative overflow-hidden">
                         <div className="flex justify-between items-center relative z-10 px-2">
                             <h2 className="text-lg font-black tracking-tight flex items-center">
-                                <i className='bx bx-data mr-2 text-blue-500 text-xl'></i> Base Signals
+                                <i className='bx bx-data mr-2 text-teal-500 text-xl'></i> Base Signals
                             </h2>
                             <label className="cursor-pointer bg-white group hover:scale-105 active:scale-95 transition-all w-8 h-8 rounded-xl flex items-center justify-center shadow-lg shadow-white/5">
                                 <i className='bx bx-upload text-black text-sm'></i>
@@ -197,9 +197,9 @@ export default function ProjectDetails() {
                         </div>
 
                         {uploading && (
-                            <div className="flex items-center justify-center py-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl animate-pulse">
-                                <i className='bx bx-loader-alt animate-spin mr-2 text-blue-500 text-xl'></i>
-                                <span className="text-xs font-black text-blue-400 uppercase tracking-tighter">Uploading...</span>
+                            <div className="flex items-center justify-center py-4 bg-teal-500/10 border border-teal-500/20 rounded-2xl animate-pulse">
+                                <i className='bx bx-loader-alt animate-spin mr-2 text-teal-500 text-xl'></i>
+                                <span className="text-xs font-black text-teal-400 uppercase tracking-tighter">Uploading...</span>
                             </div>
                         )}
 
@@ -209,8 +209,8 @@ export default function ProjectDetails() {
                                     key={ds.id}
                                     onClick={() => setSelectedDataset(ds)}
                                     className={`w-full text-left p-3 rounded-2xl transition-all border group relative ${selectedDataset?.id === ds.id
-                                            ? "bg-white/10 border-white/20 shadow-[-5px_0_15px_-5px_rgba(59,130,246,0.5)]"
-                                            : "hover:bg-white/5 border-transparent hover:border-white/5"
+                                        ? "bg-white/10 border-white/20 shadow-[-5px_0_15px_-5px_rgba(20,184,166,0.5)]"
+                                        : "hover:bg-white/5 border-transparent hover:border-white/5"
                                         }`}
                                 >
                                     <div className="flex items-center justify-between pointer-events-none">
@@ -220,7 +220,7 @@ export default function ProjectDetails() {
                                             </p>
                                         </div>
                                         {selectedDataset?.id === ds.id && (
-                                            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6]"></div>
+                                            <div className="w-1.5 h-1.5 bg-teal-500 rounded-full shadow-[0_0_10px_#14b8a6]"></div>
                                         )}
                                     </div>
                                 </button>
@@ -237,8 +237,8 @@ export default function ProjectDetails() {
                                     key={algo.id}
                                     onClick={() => setSelectedAlgorithm(algo.id)}
                                     className={`w-full text-left p-3 rounded-2xl transition-all border text-xs ${selectedAlgorithm === algo.id
-                                            ? "bg-blue-500/10 border-blue-500/30 text-blue-400"
-                                            : "border-transparent text-muted-foreground hover:bg-white/5"
+                                        ? "bg-teal-500/10 border-teal-500/30 text-teal-400"
+                                        : "border-transparent text-muted-foreground hover:bg-white/5"
                                         }`}
                                 >
                                     <p className="font-black uppercase tracking-tighter">{algo.name}</p>
@@ -278,7 +278,7 @@ export default function ProjectDetails() {
                                         </div>
                                         <button
                                             onClick={handleTrain}
-                                            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-3xl font-black text-xs uppercase tracking-widest flex items-center space-x-3 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-blue-600/20"
+                                            className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-4 rounded-3xl font-black text-xs uppercase tracking-widest flex items-center space-x-3 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-emerald-600/20"
                                         >
                                             <i className='bx bx-brain text-xl'></i>
                                             <span>Train {selectedAlgorithm}</span>
@@ -289,7 +289,7 @@ export default function ProjectDetails() {
                                         {models.map(model => (
                                             <div key={model.id} className="glass-panel p-8 rounded-[2.5rem] border border-white/5 flex justify-between items-center group relative overflow-hidden transition-all hover:border-white/10">
                                                 <div className="flex items-center space-x-6 relative z-10">
-                                                    <div className="w-16 h-16 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground shadow-lg group-hover:bg-blue-500/10 transition-all duration-500">
+                                                    <div className="w-16 h-16 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground shadow-lg group-hover:bg-teal-500/10 transition-all duration-500">
                                                         <i className={`bx ${model.status === 'COMPLETED' ? 'bx-chip' : 'bx-cog bx-spin'} text-4xl`}></i>
                                                     </div>
                                                     <div>
@@ -319,7 +319,7 @@ export default function ProjectDetails() {
                                 <div className="space-y-8 min-h-[500px]">
                                     {loadingStats ? (
                                         <div className="flex flex-col items-center justify-center h-full py-20 space-y-4">
-                                            <i className='bx bx-loader-alt animate-spin text-6xl text-blue-500'></i>
+                                            <i className='bx bx-loader-alt animate-spin text-6xl text-teal-500'></i>
                                             <p className="text-muted-foreground font-black uppercase tracking-widest text-xs animate-pulse text-center">Synthesizing Statistical Insights<br />Analyzing Data Patterns...</p>
                                         </div>
                                     ) : (
@@ -347,7 +347,7 @@ function TabButton({ active, onClick, icon, label }) {
             onClick={onClick}
             className={`flex items-center space-x-2 px-6 py-3 rounded-t-2xl font-black text-xs uppercase tracking-widest transition-all
                 ${active
-                    ? "bg-white/5 text-blue-400 border-t-2 border-blue-500"
+                    ? "bg-white/5 text-teal-400 border-t-2 border-teal-500"
                     : "text-muted-foreground hover:text-white hover:bg-white/5"
                 }`}
         >
@@ -362,7 +362,7 @@ function StatusBadge({ status }) {
         case 'COMPLETED':
             return <span className="flex items-center text-[10px] font-black uppercase tracking-widest text-green-400"><i className='bx bxs-check-shield mr-1 text-xs'></i> Stable</span>;
         case 'TRAINING':
-            return <span className="flex items-center text-[10px] font-black uppercase tracking-widest text-blue-400"><i className='bx bx-sync bx-spin mr-1 text-xs'></i> Learning</span>;
+            return <span className="flex items-center text-[10px] font-black uppercase tracking-widest text-teal-400"><i className='bx bx-sync bx-spin mr-1 text-xs'></i> Learning</span>;
         case 'FAILED':
             return <span className="flex items-center text-[10px] font-black uppercase tracking-widest text-red-500"><i className='bx bxs-error-alt mr-1 text-xs'></i> Disrupted</span>;
         default:

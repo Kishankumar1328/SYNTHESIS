@@ -10,8 +10,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableAsync
-@EntityScan(basePackages = "com.synthetic.platform.model")
-@EnableJpaRepositories(basePackages = "com.synthetic.platform.repository")
 public class SyntheticDataPlatformApplication {
 
 	public static void main(String[] args) {

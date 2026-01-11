@@ -114,7 +114,7 @@ export default function PrivacyAudit() {
         <div className="p-12 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-700">
             {/* Header */}
             <header>
-                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-violet-400 via-purple-500 to-fuchsia-500 bg-clip-text text-transparent">
                     Privacy Audit
                 </h1>
                 <p className="text-muted-foreground text-lg font-medium">
@@ -134,7 +134,7 @@ export default function PrivacyAudit() {
                             <select
                                 value={selectedDataset || ''}
                                 onChange={(e) => setSelectedDataset(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 ring-purple-500/50 outline-none appearance-none transition-all"
+                                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 ring-violet-500/50 outline-none appearance-none transition-all"
                             >
                                 <option value="" className="bg-[#0a0c10]">Choose a dataset...</option>
                                 {datasets.map((dataset) => (
@@ -149,7 +149,7 @@ export default function PrivacyAudit() {
                     <button
                         onClick={runAudit}
                         disabled={isAuditing || !selectedDataset}
-                        className="bg-purple-600 hover:bg-purple-500 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-purple-600/20 disabled:opacity-50 flex items-center justify-center gap-3 h-[60px]"
+                        className="bg-violet-600 hover:bg-violet-500 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-violet-600/20 disabled:opacity-50 flex items-center justify-center gap-3 h-[60px]"
                     >
                         {isAuditing ? (
                             <>
@@ -171,7 +171,7 @@ export default function PrivacyAudit() {
                 <div className="space-y-6 animate-in slide-in-from-bottom-8 duration-700">
                     {/* Overall Score */}
                     <div className="glass-panel p-8 rounded-[2rem] border border-white/10 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-violet-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
 
                         <div className="flex items-center justify-between mb-6 relative z-10">
                             <div>
@@ -180,7 +180,7 @@ export default function PrivacyAudit() {
                             </div>
                             <div className="flex flex-col items-end">
                                 <span className="text-xs text-muted-foreground font-black uppercase tracking-widest mb-1">Privacy Score</span>
-                                <div className="text-6xl font-black bg-gradient-to-r from-green-400 to-purple-500 bg-clip-text text-transparent italic">
+                                <div className="text-6xl font-black bg-gradient-to-r from-violet-400 to-fuchsia-500 bg-clip-text text-transparent italic">
                                     {auditResults.overallScore}%
                                 </div>
                             </div>
@@ -262,9 +262,9 @@ export default function PrivacyAudit() {
             {/* Empty State */}
             {!auditResults && !isAuditing && (
                 <div className="glass-panel p-20 rounded-[3rem] border border-white/5 text-center relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-                    <div className="w-32 h-32 mx-auto mb-8 rounded-[2.5rem] bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform duration-700">
-                        <Shield className="w-16 h-16 text-purple-400" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                    <div className="w-32 h-32 mx-auto mb-8 rounded-[2.5rem] bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform duration-700">
+                        <Shield className="w-16 h-16 text-violet-400" />
                     </div>
                     <h3 className="text-3xl font-black tracking-tighter mb-4 italic">Security Engine Idle</h3>
                     <p className="text-muted-foreground text-xl max-w-lg mx-auto font-medium leading-relaxed">
