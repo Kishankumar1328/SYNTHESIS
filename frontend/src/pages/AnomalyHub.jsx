@@ -128,7 +128,7 @@ export default function AnomalyHub() {
         <div className="p-12 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-700">
             {/* Header */}
             <header>
-                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-orange-400 via-amber-500 to-orange-600 bg-clip-text text-transparent">
                     Anomaly Hub
                 </h1>
                 <p className="text-muted-foreground text-lg font-medium">

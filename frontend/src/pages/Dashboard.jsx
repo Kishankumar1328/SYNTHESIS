@@ -22,7 +22,7 @@ export default function Dashboard() {
         <div className="p-12 max-w-7xl mx-auto space-y-12 animate-in fade-in duration-700">
             <header className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent italic">
+                    <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent italic">
                         Workspaces
                     </h1>
                     <p className="text-muted-foreground text-lg font-medium">Manage and generate synthetic environments.</p>
@@ -43,13 +43,13 @@ export default function Dashboard() {
                             <i className='bx bx-rename absolute left-4 top-1/2 -translate-y-1/2 text-xl text-muted-foreground'></i>
                             <input
                                 autoFocus
-                                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 ring-blue-500/50 outline-none transition-all placeholder:text-muted-foreground/50"
+                                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 focus:ring-2 ring-teal-500/50 outline-none transition-all placeholder:text-muted-foreground/50"
                                 placeholder="Environment Name (e.g. Fraud Detection 2024)"
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)}
                             />
                         </div>
-                        <button className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/20">Init</button>
+                        <button className="bg-teal-600 hover:bg-teal-500 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-teal-600/20">Init</button>
                         <button onClick={() => setIsCreating(false)} type="button" className="px-6 py-4 text-muted-foreground font-bold hover:text-white transition-colors">Cancel</button>
                     </form>
                 </div>
@@ -60,21 +60,21 @@ export default function Dashboard() {
                     <Link
                         key={project.id}
                         to={`/project/${project.id}`}
-                        className="group glass-panel p-8 rounded-[2.5rem] border border-white/5 hover:border-blue-500/30 transition-all duration-500 relative overflow-hidden"
+                        className="group glass-panel p-8 rounded-[2.5rem] border border-white/5 hover:border-teal-500/30 transition-all duration-500 relative overflow-hidden"
                     >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-blue-500/10 transition-all"></div>
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-teal-500/10 transition-all"></div>
 
                         <div className="space-y-6 relative z-10">
-                            <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center text-muted-foreground group-hover:from-blue-500 group-hover:to-indigo-600 group-hover:text-white group-hover:border-transparent transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-xl transform-gpu">
+                            <div className="w-16 h-16 rounded-[1.5rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center text-muted-foreground group-hover:from-emerald-500 group-hover:to-teal-600 group-hover:text-white group-hover:border-transparent transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-xl transform-gpu">
                                 <i className='bx bx-folder-open text-3xl'></i>
                             </div>
                             <div>
-                                <h3 className="text-2xl font-black tracking-tight leading-tight mb-2 group-hover:text-blue-400 transition-colors">
+                                <h3 className="text-2xl font-black tracking-tight leading-tight mb-2 group-hover:text-teal-400 transition-colors">
                                     {project.name}
                                 </h3>
                                 <div className="flex items-center space-x-4">
                                     <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest flex items-center">
-                                        <i className='bx bx-calendar-event mr-2 text-lg text-blue-500/50'></i>
+                                        <i className='bx bx-calendar-event mr-2 text-lg text-teal-500/50'></i>
                                         {new Date(project.createdAt).toLocaleDateString()}
                                     </p>
                                     <div className="h-1 w-1 bg-white/20 rounded-full"></div>
@@ -86,9 +86,9 @@ export default function Dashboard() {
                         <div className="mt-8 flex justify-between items-center opacity-40 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 duration-500">
                             <div className="flex -space-x-2">
                                 <i className='bx bxs-user-circle text-2xl text-white/20 border-2 border-[#0a0c10] rounded-full'></i>
-                                <div className="w-6 h-6 rounded-full bg-blue-500/20 border-2 border-[#0a0c10] flex items-center justify-center text-[8px] font-bold text-blue-400">+</div>
+                                <div className="w-6 h-6 rounded-full bg-teal-500/20 border-2 border-[#0a0c10] flex items-center justify-center text-[8px] font-bold text-teal-400">+</div>
                             </div>
-                            <i className='bx bx-right-arrow-alt text-3xl text-blue-500 group-hover:translate-x-2 transition-transform duration-500'></i>
+                            <i className='bx bx-right-arrow-alt text-3xl text-teal-500 group-hover:translate-x-2 transition-transform duration-500'></i>
                         </div>
                     </Link>
                 ))}

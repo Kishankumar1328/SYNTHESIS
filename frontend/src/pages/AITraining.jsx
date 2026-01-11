@@ -92,7 +92,7 @@ export default function AITraining() {
         <div className="p-12 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-700">
             {/* Header */}
             <header>
-                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
                     AI Model Training
                 </h1>
                 <p className="text-muted-foreground text-lg font-medium">
@@ -103,7 +103,7 @@ export default function AITraining() {
             {/* Training Configuration */}
             <div className="glass-panel p-8 rounded-[2rem] border border-white/10">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                    <Brain className="w-6 h-6 text-purple-500" />
+                    <Brain className="w-6 h-6 text-emerald-500" />
                     Train New Model
                 </h2>
 
@@ -116,7 +116,7 @@ export default function AITraining() {
                         <select
                             value={selectedDataset || ''}
                             onChange={(e) => setSelectedDataset(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-purple-500/50 outline-none"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-emerald-500/50 outline-none"
                         >
                             <option value="">Choose a dataset...</option>
                             {datasets.map((dataset) => (
@@ -135,7 +135,7 @@ export default function AITraining() {
                         <select
                             value={algorithm}
                             onChange={(e) => setAlgorithm(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-purple-500/50 outline-none"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-emerald-500/50 outline-none"
                         >
                             <option value="CTGAN">CTGAN (Recommended)</option>
                             <option value="TVAE">TVAE</option>
@@ -153,7 +153,7 @@ export default function AITraining() {
                             type="number"
                             value={hyperparameters.epochs}
                             onChange={(e) => setHyperparameters({ ...hyperparameters, epochs: parseInt(e.target.value) })}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-purple-500/50 outline-none"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-emerald-500/50 outline-none"
                         />
                     </div>
 
@@ -165,7 +165,7 @@ export default function AITraining() {
                             type="number"
                             value={hyperparameters.batch_size}
                             onChange={(e) => setHyperparameters({ ...hyperparameters, batch_size: parseInt(e.target.value) })}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-purple-500/50 outline-none"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-emerald-500/50 outline-none"
                         />
                     </div>
 
@@ -178,7 +178,7 @@ export default function AITraining() {
                             step="0.0001"
                             value={hyperparameters.learning_rate}
                             onChange={(e) => setHyperparameters({ ...hyperparameters, learning_rate: parseFloat(e.target.value) })}
-                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-purple-500/50 outline-none"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:ring-2 ring-emerald-500/50 outline-none"
                         />
                     </div>
                 </div>
@@ -186,7 +186,7 @@ export default function AITraining() {
                 <button
                     onClick={handleTrainModel}
                     disabled={isTraining || !selectedDataset}
-                    className="mt-6 w-full bg-purple-600 hover:bg-purple-500 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-purple-600/20 disabled:opacity-50 flex items-center justify-center gap-3"
+                    className="mt-6 w-full bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-emerald-600/20 disabled:opacity-50 flex items-center justify-center gap-3"
                 >
                     {isTraining ? (
                         <>
@@ -228,8 +228,8 @@ export default function AITraining() {
 
                 {trainedModels.length === 0 ? (
                     <div className="glass-panel p-12 rounded-[2rem] border border-white/10 text-center">
-                        <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-purple-500/10 flex items-center justify-center">
-                            <Brain className="w-12 h-12 text-purple-400" />
+                        <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                            <Brain className="w-12 h-12 text-emerald-400" />
                         </div>
                         <h3 className="text-2xl font-bold mb-3">No Models Trained Yet</h3>
                         <p className="text-muted-foreground max-w-md mx-auto">
@@ -241,11 +241,11 @@ export default function AITraining() {
                         {trainedModels.map((model) => (
                             <div
                                 key={model.id}
-                                className="glass-panel p-6 rounded-2xl border border-white/10 hover:border-purple-500/30 transition-all"
+                                className="glass-panel p-6 rounded-2xl border border-white/10 hover:border-emerald-500/30 transition-all"
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
                                             {getStatusIcon(model.status)}
                                         </div>
                                         <div>

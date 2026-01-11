@@ -51,7 +51,7 @@ export default function Datasets() {
         <div className="p-12 max-w-7xl mx-auto space-y-8 animate-in fade-in duration-700">
             {/* Header */}
             <header>
-                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">
+                <h1 className="text-5xl font-black tracking-tighter mb-3 bg-gradient-to-r from-blue-400 via-indigo-500 to-blue-600 bg-clip-text text-transparent">
                     Datasets
                 </h1>
                 <p className="text-muted-foreground text-lg font-medium">
@@ -152,7 +152,7 @@ export default function Datasets() {
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center">
                                             <FileText className="w-6 h-6 text-blue-400" />
                                         </div>
                                         <div>
