@@ -53,7 +53,7 @@ const HybridAIAnalyst = () => {
 
     const checkHealth = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/health');
+            const response = await fetch('/ai/health');
             const data = await response.json();
             setServiceStatus({
                 online: true,
@@ -68,7 +68,7 @@ const HybridAIAnalyst = () => {
 
     const loadFiles = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/files');
+            const response = await fetch('/ai/files');
             const data = await response.json();
             setUploadedFiles(data.files || []);
         } catch (error) {
@@ -85,7 +85,7 @@ const HybridAIAnalyst = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/upload', {
+            const response = await fetch('/ai/upload', {
                 method: 'POST',
                 body: formData
             });
@@ -148,7 +148,7 @@ const HybridAIAnalyst = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/query', {
+            const response = await fetch('/ai/query', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

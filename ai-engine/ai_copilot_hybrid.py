@@ -444,22 +444,27 @@ def query_llm(question, context):
         if not check_ollama_health():
             return "❌ LLM service (Ollama) is not available. Please start Ollama with: ollama serve"
         
-        # Build prompt
-        prompt = f"""You are a Dataset Intelligence Assistant. You help users understand their data analysis results.
+        # Proactive "Senior AI Architect" Prompting
+        # Rule: Provide deep architectural insights and technical guidance, not just basic summaries
+        prompt = f"""SYSTEM: You are the Senior AI Architect and Lead Data Strategist for SynthoGen Enterprise.
+Your expertise covers Cyber-Physical Systems, Differential Privacy, and Advanced Synthetic Modeling.
 
-STRICT RULES:
-1. Answer ONLY using the provided analysis results
-2. NEVER make up statistics or data
-3. NEVER expose raw data rows
-4. NEVER infer or mention specific PII values
-5. Be clear, structured, and business-friendly
+SCENARIO: A user is analyzing a critical industrial dataset. You must provide high-level, proactive architectural advice.
 
-DATASET ANALYSIS RESULTS:
+DETERMINISTIC DATASET ANALYSIS (SOURCE OF TRUTH):
 {context}
 
 USER QUESTION: {question}
 
-Provide a clear, data-driven answer based ONLY on the analysis results above. If the question cannot be answered from the available data, explain what information is missing."""
+INSTRUCTIONS:
+1. Identify hidden behavioral patterns or architectural risks in the dataset.
+2. Recommend specific synthetic generation strategies (e.g., CTGAN vs TVAE) based on the data schema.
+3. Suggest privacy-safe handling for the detected PII/sensitive fields.
+4. If the data quality is poor, provide a technical rectification roadmap.
+5. Be proactive: if you see a potential issue the user didn't ask about, mention it.
+
+FORMAT: Use structured markdown with technical headers. Be precise and authoritative.
+"""
 
         # Query Ollama
         response = requests.post(

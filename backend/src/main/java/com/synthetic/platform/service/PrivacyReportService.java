@@ -112,7 +112,10 @@ public class PrivacyReportService {
             reason = "Medical/Health Information";
         } else if (lowerName.matches(".*(latitude|longitude|gps|location|coordinate).*")) {
             isSensitive = true;
-            reason = "Precise Location Data";
+            reason = "Precise Location Data (CPS)";
+        } else if (lowerName.matches(".*(ip_address|mac_address|device_id|uuid|serial|vin|imei).*")) {
+            isSensitive = true;
+            reason = "Network/Device Identifier (CPS)";
         }
 
         // Determine data type

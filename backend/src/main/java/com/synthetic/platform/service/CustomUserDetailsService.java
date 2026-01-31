@@ -1,7 +1,7 @@
 package com.synthetic.platform.service;
 
-import com.synthetic.platform.model.User;
-import com.synthetic.platform.repository.UserRepository;
+import com.synthetic.platform.security.model.User;
+import com.synthetic.platform.security.repository.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AuthUserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

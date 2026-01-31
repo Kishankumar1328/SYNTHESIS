@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import { AlertCircle, TrendingUp, Activity, Zap, Filter, FileText, Search, Sparkles } from 'lucide-react';
+import { AlertCircle, TrendingUp, Activity, Zap, Filter, FileText, Search, Sparkles, Layers } from 'lucide-react';
 import { AIAPI } from '../api';
 import { useProjects } from '../hooks/useProjects';
 import { useDatasets } from '../hooks/useDatasets';
 
 export default function AnomalyHub() {
     const { projects } = useProjects();
-    const activeProject = projects[0];
-    const { datasets } = useDatasets(activeProject?.id);
-
+    const [selectedProject, setSelectedProject] = useState(null);
     const [selectedDataset, setSelectedDataset] = useState(null);
+
+    // Initialize selected project
+    React.useEffect(() => {
+        if (projects.length > 0 && !selectedProject) {
+            setSelectedProject(projects[0].id);
+        }
+    }, [projects]);
+
+    const activeProject = projects.find(p => p.id === selectedProject) || projects[0];
+    const { datasets } = useDatasets(activeProject?.id);
     const [anomalies, setAnomalies] = useState([]);
     const [filter, setFilter] = useState('all'); // all, high, medium, low
     const [isScanning, setIsScanning] = useState(false);
@@ -130,8 +138,33 @@ export default function AnomalyHub() {
             <div className="glass-panel p-10 rounded-[3rem] border border-white/5 space-y-8 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-[100px] group-hover:bg-orange-500/10 transition-all"></div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-end relative z-10">
-                    <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-6 relative z-10">
+                    {/* Project Selector */}
+                    <div className="flex-1 space-y-4">
+                        <label className="block text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">
+                            Workspace
+                        </label>
+                        <div className="relative">
+                            <Layers className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-orange-500/50" />
+                            <select
+                                value={selectedProject || ''}
+                                onChange={(e) => {
+                                    setSelectedProject(Number(e.target.value));
+                                    setSelectedDataset(null);
+                                }}
+                                className="w-full bg-white/5 border border-white/10 rounded-[1.25rem] pl-14 pr-6 py-5 focus:ring-2 ring-orange-500/40 outline-none appearance-none transition-all font-bold text-sm"
+                            >
+                                {projects.map((p) => (
+                                    <option key={p.id} value={p.id} className="bg-[#05070a]">
+                                        {p.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Dataset Selector */}
+                    <div className="flex-1 space-y-4">
                         <label className="block text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">
                             Target Signal
                         </label>

@@ -1,16 +1,52 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import { useProjects } from './hooks/useProjects';
 import Dashboard from './pages/Dashboard';
 import ProjectDetails from './pages/ProjectDetails';
 import Datasets from './pages/Datasets';
+import DataInsights from './pages/DataInsights';
+import AdvancedAnalytics from './pages/AdvancedAnalytics';
 import PrivacyAudit from './pages/PrivacyAudit';
 import AnomalyHub from './pages/AnomalyHub';
 import AITraining from './pages/AITraining';
 import HybridAIAnalyst from './pages/HybridAIAnalyst';
 import AICopilotButton from './components/AICopilotButton';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+    const { isAuthenticated, loading } = useAuth();
+
+    if (loading) return (
+        <div className="min-h-screen bg-[#05070a] flex items-center justify-center">
+            <div className="w-12 h-12 border-4 border-orange-500/20 border-t-orange-500 rounded-full animate-spin"></div>
+        </div>
+    );
+
+    if (!isAuthenticated) return <Navigate to="/login" />;
+
+    return children;
+};
 
 function App() {
     const location = useLocation();
+    const { isAuthenticated, user, logout } = useAuth();
+    const { createProject } = useProjects();
+
+    // Check if current page is an auth page
+    const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+
+    if (isAuthPage) {
+        return (
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="*" element={<Navigate to="/login" />} />
+            </Routes>
+        );
+    }
 
     return (
         <div className="min-h-screen flex text-white bg-[#05070a] font-sans selection:bg-orange-500/30">
@@ -45,6 +81,20 @@ function App() {
                         activeColor="orange"
                     />
                     <SidebarLink
+                        icon="bx-bar-chart-alt-2"
+                        label="Data Insights"
+                        to="/insights"
+                        active={location.pathname === '/insights'}
+                        activeColor="orange"
+                    />
+                    <SidebarLink
+                        icon="bx-line-chart"
+                        label="Advanced Analytics"
+                        to="/analytics"
+                        active={location.pathname === '/analytics'}
+                        activeColor="orange"
+                    />
+                    <SidebarLink
                         icon="bx-shield-quarter"
                         label="Privacy Audit"
                         to="/security"
@@ -74,18 +124,41 @@ function App() {
                     />
                 </nav>
 
-                <div className="p-6 bg-white/[0.02] rounded-[2rem] border border-white/5 relative overflow-hidden group hover:bg-white/[0.04] transition-all cursor-pointer relative z-10">
+                <div className="pt-4 border-t border-white/5 relative z-10">
+                    <button
+                        onClick={async () => {
+                            const name = prompt("Enter workspace name:");
+                            if (name) {
+                                try {
+                                    const newProj = await createProject(name);
+                                    window.location.href = `/project/${newProj.id}`;
+                                } catch (e) {
+                                    alert("Failed to create workspace: " + e.message);
+                                }
+                            }
+                        }}
+                        className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-600 font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-orange-500/20 group"
+                    >
+                        <i className='bx bx-plus text-lg group-hover:rotate-90 transition-transform duration-500'></i>
+                        New Workspace
+                    </button>
+                </div>
+
+                <div
+                    onClick={() => logout()}
+                    className="p-6 bg-white/[0.02] rounded-[2rem] border border-white/5 relative overflow-hidden group hover:bg-orange-500/10 transition-all cursor-pointer relative z-10"
+                >
                     <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-orange-500/10 rounded-full blur-2xl group-hover:bg-orange-500/20 transition-all"></div>
                     <p className="text-[9px] text-orange-500 uppercase font-black mb-4 tracking-widest flex items-center gap-2">
-                        <div className="w-1 h-1 bg-orange-500 rounded-full animate-pulse"></div> Secure Access
+                        <div className="w-1 h-1 bg-orange-500 rounded-full animate-pulse"></div> Session Active
                     </p>
                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center border border-orange-500/20">
-                            <i className='bx bx-user text-xl text-orange-400'></i>
+                        <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center border border-orange-500/20 group-hover:bg-orange-500/20 transition-all">
+                            <i className='bx bx-power-off text-xl text-orange-400'></i>
                         </div>
                         <div className="min-w-0">
-                            <p className="text-xs font-black text-white truncate">Kishan Kumar</p>
-                            <p className="text-[10px] text-white/30 truncate uppercase font-bold tracking-tight">System Admin</p>
+                            <p className="text-xs font-black text-white truncate">{user?.username || 'Operative'}</p>
+                            <p className="text-[10px] text-white/30 truncate uppercase font-bold tracking-tight">Click to Terminate</p>
                         </div>
                     </div>
                 </div>
@@ -94,13 +167,16 @@ function App() {
             {/* Main Content Area */}
             <main className="flex-1 overflow-auto relative custom-scrollbar bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-500/5 via-transparent to-transparent">
                 <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/project/:id" element={<ProjectDetails />} />
-                    <Route path="/datasets" element={<Datasets />} />
-                    <Route path="/security" element={<PrivacyAudit />} />
-                    <Route path="/anomalies" element={<AnomalyHub />} />
-                    <Route path="/ai-training" element={<AITraining />} />
-                    <Route path="/ai-analyst" element={<HybridAIAnalyst />} />
+                    <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                    <Route path="/project/:id" element={<ProtectedRoute><ProjectDetails /></ProtectedRoute>} />
+                    <Route path="/datasets" element={<ProtectedRoute><Datasets /></ProtectedRoute>} />
+                    <Route path="/insights" element={<ProtectedRoute><DataInsights /></ProtectedRoute>} />
+                    <Route path="/analytics" element={<ProtectedRoute><AdvancedAnalytics /></ProtectedRoute>} />
+                    <Route path="/security" element={<ProtectedRoute><PrivacyAudit /></ProtectedRoute>} />
+                    <Route path="/anomalies" element={<ProtectedRoute><AnomalyHub /></ProtectedRoute>} />
+                    <Route path="/ai-training" element={<ProtectedRoute><AITraining /></ProtectedRoute>} />
+                    <Route path="/ai-analyst" element={<ProtectedRoute><HybridAIAnalyst /></ProtectedRoute>} />
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </main>
 
@@ -108,7 +184,7 @@ function App() {
             <AICopilotButton />
         </div>
     );
-}
+};
 
 function SidebarLink({ icon, label, to, active, activeColor = "orange" }) {
     const activeStyles = {

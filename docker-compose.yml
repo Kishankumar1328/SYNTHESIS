@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: connect-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./setup_mysql.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build: .
+    container_name: connect-backend
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_CORE_JDBC_URL: jdbc:mysql://db:3306/synthetic_platform?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_AUTH_JDBC_URL: jdbc:mysql://db:3306/auth_platform?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      APP_PYTHON_PATH: /app/venv/bin/python
+      APP_AI_ENGINE_PATH: /app/ai-engine
+      OLLAMA_URL: http://host.docker.internal:11434
+      OLLAMA_MODEL: gemma:2b
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./ai-engine:/app/ai-engine
+
+  frontend:
+    build: ./frontend
+    container_name: connect-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:

@@ -72,7 +72,11 @@ const AICopilot = ({ isOpen, onClose, datasetInfo = null, statistics = null }) =
                     datasetInfo: datasetInfo
                 }
                 : {
-                    message: inputMessage
+                    message: inputMessage,
+                    history: messages.slice(-10).map(msg => ({
+                        role: msg.role === 'assistant' ? 'assistant' : 'user',
+                        content: msg.content
+                    }))
                 };
 
             const response = await fetch(endpoint, {
@@ -194,10 +198,10 @@ const AICopilot = ({ isOpen, onClose, datasetInfo = null, statistics = null }) =
                             >
                                 {/* Avatar */}
                                 <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${message.role === 'user'
-                                        ? 'bg-gradient-to-br from-green-500 to-emerald-600'
-                                        : message.isError
-                                            ? 'bg-gradient-to-br from-red-500 to-orange-600'
-                                            : 'bg-gradient-to-br from-blue-500 to-purple-600'
+                                    ? 'bg-gradient-to-br from-green-500 to-emerald-600'
+                                    : message.isError
+                                        ? 'bg-gradient-to-br from-red-500 to-orange-600'
+                                        : 'bg-gradient-to-br from-blue-500 to-purple-600'
                                     }`}>
                                     <i className={`bx ${message.role === 'user' ? 'bx-user' : message.isError ? 'bx-error' : 'bx-brain'} text-xl text-white`}></i>
                                 </div>
@@ -205,10 +209,10 @@ const AICopilot = ({ isOpen, onClose, datasetInfo = null, statistics = null }) =
                                 {/* Message Bubble */}
                                 <div className={`flex-1 max-w-[75%] ${message.role === 'user' ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
                                     <div className={`px-4 py-3 rounded-2xl ${message.role === 'user'
-                                            ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30'
-                                            : message.isError
-                                                ? 'bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-500/30'
-                                                : 'glass-panel'
+                                        ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30'
+                                        : message.isError
+                                            ? 'bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-500/30'
+                                            : 'glass-panel'
                                         }`}>
                                         <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                                     </div>

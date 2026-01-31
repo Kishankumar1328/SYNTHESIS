@@ -40,20 +40,55 @@ def train_model(data_path, output_path, algorithm='CTGAN', epochs=300, batch_siz
             'country': 'country',
             'name': 'person_name',
             'first_name': 'first_name',
-            'last_name': 'last_name'
+            'last_name': 'last_name',
+            # CPS Specific Identifiers
+            'ip_address': 'ip_address',
+            'mac_address': 'mac_address',
+            'gps': 'latitude',
+            'lat': 'latitude',
+            'lon': 'longitude',
+            'uuid': 'uuid',
+            'serial': 'id',
+            'vin': 'id'
         }
+        
+        # Extended detection: Scan first few rows to detect PII even if names are obfuscated
+        import re
+        ip_regex = re.compile(r'^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$')
+        mac_regex = re.compile(r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$')
+        email_regex = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
         
         logger.info("Applying Privacy-Safe Configuration...")
         for col in metadata.columns:
             col_lower = col.lower()
+            detected_type = None
+            
+            # 1. Name-based detection
             for pattern, sdtype in pii_patterns.items():
                 if pattern in col_lower and metadata.columns[col]['sdtype'] not in ['numerical', 'datetime']:
-                    logger.info(f"  - Flagged '{col}' as PII ({sdtype}). Will generate fully synthetic values.")
-                    try:
-                        metadata.update_column(column_name=col, sdtype=sdtype)
-                    except Exception as meta_err:
-                        logger.warning(f"    Could not auto-configure PII for {col}: {meta_err}")
+                    detected_type = sdtype
                     break
+            
+            # 2. Content-based detection (if name-based failed)
+            if not detected_type and metadata.columns[col]['sdtype'] == 'categorical':
+                sample_values = data[col].dropna().head(10).astype(str).tolist()
+                for val in sample_values:
+                    if ip_regex.match(val):
+                        detected_type = 'ip_address'
+                        break
+                    elif mac_regex.match(val):
+                        detected_type = 'mac_address'
+                        break
+                    elif email_regex.match(val):
+                        detected_type = 'email'
+                        break
+            
+            if detected_type:
+                logger.info(f"  - Flagged '{col}' as PII ({detected_type}). Will generate fully synthetic values.")
+                try:
+                    metadata.update_column(column_name=col, sdtype=detected_type)
+                except Exception as meta_err:
+                    logger.warning(f"    Could not auto-configure PII for {col}: {meta_err}")
 
     except Exception as e:
         logger.error(f"Metadata detection failed: {e}")

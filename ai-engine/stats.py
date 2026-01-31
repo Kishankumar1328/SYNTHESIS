@@ -84,6 +84,26 @@ def calculate_stats(data_path):
         # Correlation failure shouldn't stop the whole report
         logger.warning(f"Correlation calculation failed: {e}")
 
+    # Data Sampling for Scatter Plots (max 200 points)
+    try:
+        sample_size = min(len(df), 200)
+        sample_df = df.sample(n=sample_size).fillna("null")
+        stats["sample"] = sample_df.to_dict(orient='records')
+    except Exception as e:
+        logger.warning(f"Data sampling failed: {e}")
+
+    # Improved role detection for BI visuals
+    stats["metadata"] = {
+        "datetimeCols": [c for c in df.columns if 'date' in c.lower() or 'time' in c.lower() or 'year' in c.lower()],
+        "geoCols": {
+            "lat": next((c for c in df.columns if c.lower() in ['lat', 'latitude']), None),
+            "lng": next((c for c in df.columns if c.lower() in ['lng', 'longitude', 'long']), None),
+            "city": next((c for c in df.columns if any(k in c.lower() for k in ['city', 'location', 'town', 'country', 'region', 'state', 'land'])), None)
+        },
+        "categoricalCols": [c for c in df.columns if df[c].dtype == 'object' or df[c].nunique() < 20],
+        "numericalCols": [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])]
+    }
+
     return stats
 
 if __name__ == "__main__":

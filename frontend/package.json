@@ -11,16 +11,20 @@
     },
     "dependencies": {
         "@tailwindcss/typography": "^0.5.19",
+        "apexcharts": "^5.3.6",
         "axios": "^1.6.0",
         "chart.js": "^4.4.0",
         "clsx": "^2.0.0",
+        "d3-geo": "^3.1.1",
         "framer-motion": "^10.18.0",
         "lucide-react": "^0.292.0",
         "react": "^18.2.0",
+        "react-apexcharts": "^1.9.0",
         "react-chartjs-2": "^5.2.0",
         "react-dom": "^18.2.0",
         "react-markdown": "^10.1.0",
         "react-router-dom": "^6.20.0",
+        "react-simple-maps": "^3.0.0",
         "tailwind-merge": "^2.0.0"
     },
     "devDependencies": {

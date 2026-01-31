@@ -142,6 +142,7 @@ def analyze():
         user_query = data.get('query', '')
         statistics = data.get('statistics', {})
         dataset_info = data.get('datasetInfo', {})
+        history = data.get('history', [])
         
         if not user_query:
             return jsonify({"error": "No query provided"}), 400
@@ -153,8 +154,8 @@ def analyze():
                 "suggestion": "Please start Ollama with: ollama serve"
             }), 503
         
-        # Build context from dataset statistics
-        context = build_context(statistics, dataset_info)
+        # Build context from dataset statistics and history
+        context = build_context(statistics, dataset_info, history)
         
         # Query the AI model
         if LANGCHAIN_AVAILABLE:
@@ -173,12 +174,20 @@ def analyze():
         return jsonify({"error": str(e)}), 500
 
 
-def build_context(statistics, dataset_info):
-    """Build context string from dataset statistics"""
-    if not statistics and not dataset_info:
-        return "No dataset context available. Provide general data analysis guidance."
-    
+def build_context(statistics, dataset_info, history=None):
+    """Build context string from dataset statistics and history"""
     context_parts = []
+    
+    # Add conversation history
+    if history:
+        context_parts.append("Previous Conversation:")
+        for msg in history:
+            role = "User" if msg['role'] == 'user' else "Assistant"
+            context_parts.append(f"{role}: {msg['content']}")
+        context_parts.append("\nDataset Context:")
+
+    if not statistics and not dataset_info and not history:
+        return "No dataset context available. Provide general data analysis guidance."
     
     # Dataset basic info
     if dataset_info:
@@ -231,6 +240,7 @@ def chat():
     try:
         data = request.json
         message = data.get('message', '')
+        history = data.get('history', [])
         
         if not message:
             return jsonify({"error": "No message provided"}), 400
@@ -241,7 +251,16 @@ def chat():
                 "suggestion": "Please start Ollama with: ollama serve"
             }), 503
         
-        response = query_ollama_direct(message)
+        # Build context from history
+        context = ""
+        if history:
+            context = "Conversation History:\n"
+            for msg in history:
+                role = "User" if msg['role'] == 'user' else "Assistant"
+                context += f"{role}: {msg['content']}\n"
+            context += "\n"
+            
+        response = query_ollama_direct(message, context)
         
         return jsonify({
             "response": response,
