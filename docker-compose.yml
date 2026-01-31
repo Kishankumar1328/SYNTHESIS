@@ -22,21 +22,29 @@ services:
     ports:
       - "8080:8080"
       - "5000:5000"
-    depends_on:
-      db:
-        condition: service_healthy
     environment:
       SPRING_DATASOURCE_CORE_JDBC_URL: jdbc:mysql://db:3306/synthetic_platform?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_AUTH_JDBC_URL: jdbc:mysql://db:3306/auth_platform?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
       APP_PYTHON_PATH: /app/venv/bin/python
       APP_AI_ENGINE_PATH: /app/ai-engine
-      OLLAMA_URL: http://host.docker.internal:11434
+      OLLAMA_URL: http://ollama:11434
       OLLAMA_MODEL: gemma:2b
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - ./uploads:/app/uploads
       - ./ai-engine:/app/ai-engine
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: connect-ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
 
   frontend:
     build: ./frontend
@@ -48,3 +56,4 @@ services:
 
 volumes:
   mysql_data:
+  ollama_data:
