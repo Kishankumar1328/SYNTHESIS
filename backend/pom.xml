@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.synthetic</groupId>
 	<artifactId>platform</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>3.0.0</version>
 	<name>Synthetic Data Platform</name>
 	<description>AI-powered Synthetic Data Generation Platform</description>
 	<properties>
