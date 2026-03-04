@@ -11,6 +11,7 @@ import PrivacyAudit from './pages/PrivacyAudit';
 import AnomalyHub from './pages/AnomalyHub';
 import AITraining from './pages/AITraining';
 import HybridAIAnalyst from './pages/HybridAIAnalyst';
+import MediSynthOracle from './pages/MediSynthOracle';
 import AICopilotButton from './components/AICopilotButton';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -122,6 +123,13 @@ function App() {
                         active={location.pathname === '/ai-analyst'}
                         activeColor="orange"
                     />
+                    <SidebarLink
+                        icon="bx-dna"
+                        label="MediSynth Oracle"
+                        to="/medisynth-oracle"
+                        active={location.pathname === '/medisynth-oracle'}
+                        activeColor="orange"
+                    />
                 </nav>
 
                 <div className="pt-4 border-t border-white/5 relative z-10">
@@ -176,6 +184,7 @@ function App() {
                     <Route path="/anomalies" element={<ProtectedRoute><AnomalyHub /></ProtectedRoute>} />
                     <Route path="/ai-training" element={<ProtectedRoute><AITraining /></ProtectedRoute>} />
                     <Route path="/ai-analyst" element={<ProtectedRoute><HybridAIAnalyst /></ProtectedRoute>} />
+                    <Route path="/medisynth-oracle" element={<ProtectedRoute><MediSynthOracle /></ProtectedRoute>} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </main>
