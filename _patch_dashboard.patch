@@ -1,0 +1,12 @@
+﻿diff --git a/frontend/src/pages/Dashboard.jsx b/frontend/src/pages/Dashboard.jsx
+index c54821a..1cd30ae 100644
+--- a/frontend/src/pages/Dashboard.jsx
++++ b/frontend/src/pages/Dashboard.jsx
+@@ -528,6 +528,7 @@ export default function Dashboard() {
+                     </div>
+                 )}
+             </div>
++
+         </div>
+     );
+ }
